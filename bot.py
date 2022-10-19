@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import telebot
-from tools import get_signals, connect
+from connect import get_connection, set_estado, get_estado
+
 from login import get_login
 from tools import executa_ordens
 from threading import Thread
@@ -12,18 +13,17 @@ bot = telebot.TeleBot(API_KEY)
 
 
 def liga_bot():
-
     @bot.message_handler(commands=['executa_ordens'])
     def lista_operacoes(message):
         executa_ordens()
         bot.send_message(message.chat.id, text="Iniciando as operações...")
 
-
-
     @bot.message_handler(commands=['para_bot'])
     def parar_bot(message):
         bot.send_message(message.chat.id, text="Parando Bot...")
         try:
+            conn = get_connection()
+            set_estado(conn, 0)
             bot.stop_bot()
         except:
             print("Bot Parado")
@@ -112,8 +112,14 @@ Status: {entrada['Status']}
         except AttributeError:
             print("Erro de atributo...")
 
-
-    bot.infinity_polling()  # inicia o bot
+    try:
+        conn = get_connection()
+        estado_bot = get_estado(conn)
+        if estado_bot == 0:
+            set_estado(conn, 1)
+            bot.infinity_polling()  # inicia o bot
+    except TimeoutError:
+        print("Erro ao se conectar com o SianisIQBot")
 
 
 if __name__ == '__main__':

@@ -2,17 +2,17 @@ import sqlite3
 
 
 def get_connection(url='iq_option.db'):
-    conn = sqlite3.connect(url)
+    conn = sqlite3.connect(url, check_same_thread=False)
     return conn
 
 
-def get_estado(conn: sqlite3.Connection):
+def get_estado(conn: sqlite3.Connection) -> int:
     cursor = conn.cursor()
     estados = cursor.execute('SELECT * FROM estados')
     valor_estado = estados.fetchone()
     valor_estado = valor_estado[1]
 
-    return valor_estado
+    return int(valor_estado)
 
 
 def set_estado(conn: sqlite3.Connection, value: int):
@@ -48,7 +48,7 @@ def save_sinal(conn: sqlite3.Connection, sinal: dict):
                                  sinal["Origem"], sinal["Status"]))
         conn.commit()
     except Exception as e:
-        print("Erro ao inserir o sinal")
+        print(e)
 
 
 def get_sinais(conn: sqlite3.Connection):
@@ -66,14 +66,14 @@ def atualiza_sinal(conn: sqlite3.Connection, rowid: int):
         print('Erro ao atualizar o sinal...')
 
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
 
-    conn = get_connection()
-    cursor = conn.cursor()
-    sinal = cursor.execute('SELECT rowid, * FROM sinais WHERE status = 1')
-    dado = sinal.fetchone()
-    print(dado)
-    print(get_sinais(conn))
-
-    print('******** Atualizando sinal ********')
-    atualiza_sinal(conn, dado[0])
+    # conn = get_connection()
+    # cursor = conn.cursor()
+    # sinal = cursor.execute('SELECT rowid, * FROM sinais WHERE status = 1')
+    # dado = sinal.fetchone()
+    # print(dado)
+    # print(get_sinais(conn))
+    #
+    # print('******** Atualizando sinal ********')
+    # atualiza_sinal(conn, dado[0])

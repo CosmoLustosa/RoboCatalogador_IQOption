@@ -22,26 +22,26 @@ def connect(url=url, db_name="IQOption", collection_name="OB"):
     return mycollection
 
 
-def save_all(collection_name: collection, lista_sinais):
-    collection_name.insert_many(lista_sinais)
-
-
-def save_signal(collection_name: collection, sinal: dict):
-    collection_name.insert_one(sinal)
-
-
-def get_signals(colection_name, sinais: dict):
-    colecao = colection_name.find(sinais,
-                                  {"_id": 1, "Horario": 1, "Moeda": 1, "Time_Frame": 1, "Action": 1, "Origem": 1,
-                                   "Status": 1}).sort("Horario")
-    return colecao
-
-
-def atualiza_status(collection: collection, id_registro):
-    """atualiza o registro no banco de dado para close (ja fechado)"""
-    consulta = {'_id': id_registro}
-    values = {"$set": {"Status": "Close"}}
-    collection.update_one(consulta, values)
+# def save_all(collection_name: collection, lista_sinais):
+#     collection_name.insert_many(lista_sinais)
+#
+#
+# def save_signal(collection_name: collection, sinal: dict):
+#     collection_name.insert_one(sinal)
+#
+#
+# def get_signals(colection_name, sinais: dict):
+#     colecao = colection_name.find(sinais,
+#                                   {"_id": 1, "Horario": 1, "Moeda": 1, "Time_Frame": 1, "Action": 1, "Origem": 1,
+#                                    "Status": 1}).sort("Horario")
+#     return colecao
+#
+#
+# def atualiza_status(collection: collection, id_registro):
+#     """atualiza o registro no banco de dado para close (ja fechado)"""
+#     consulta = {'_id': id_registro}
+#     values = {"$set": {"Status": "Close"}}
+#     collection.update_one(consulta, values)
 
 
 def busca_pares_abertos():

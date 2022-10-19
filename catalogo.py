@@ -1,8 +1,8 @@
 import re
-from tools import connect, save_signal
+from connect import get_connection, save_sinal
 from datetime import datetime
 
-mycolecao = connect()
+conn = get_connection()
 
 
 
@@ -22,14 +22,14 @@ def get_breno_trader(text: str):
     hora = dados[2]
     action = "CALL" if "COMPRA" in dados[3] else "PUT"
     dict_info = {}
-    colecao = connect()  # abre a conexão e cria a coleção
+    # colecao = connect()  # abre a conexão e cria a coleção
     dict_info["Horario"] = datetime.now().strftime("%d/%m/%y") + f" {hora}"
     dict_info["Moeda"] = par
     dict_info["Time_Frame"] = int(timeframe)
     dict_info["Action"] = action
     dict_info["Origem"] = "Breno Trader"
     dict_info["Status"] = 1
-    save_signal(mycolecao, dict_info)
+    save_sinal(conn, dict_info)
 
 
 # pronto
@@ -54,9 +54,10 @@ def get_tigre_sinais(text: str):
             dict_info["Action"] = action
             dict_info["Origem"] = "Tigre dos Sinais"
             dict_info["Status"] = 1
-            d = dict(dict_info)
-            list_dados.append(d)
-        mycolecao.insert_many(list_dados)
+            save_sinal(conn, dict_info)
+        #     d = dict(dict_info)
+        #     list_dados.append(d)
+        # mycolecao.insert_many(list_dados)
 
 
 # pronto
@@ -72,8 +73,8 @@ def get_padrão_avulso(text: str):
         dict_info["Action"] = dados[3]
         dict_info["Origem"] = "Sinal Avulso"
         dict_info["Status"] = 1
-        colecao = connect() #abre a conexão e cria a coleção
-        save_signal(mycolecao, dict_info)
+        # colecao = connect() #abre a conexão e cria a coleção
+        # save_signal(mycolecao, dict_info)
 
 
 # pronto
@@ -97,12 +98,12 @@ def get_extensao_vip(text:str):
     dict_info["Action"] = action
     dict_info["Origem"] = "Extensão Vip"
     dict_info["Status"] = 1
-    colecao = connect()  # abre a conexão e cria a coleção
-    save_signal(mycolecao, dict_info)
+    # colecao = connect()  # abre a conexão e cria a coleção
+    save_sinal(conn, dict_info)
 
 
 # pronto
-def get_sinais_gold(text:str):
+def get_sinais_gold(text: str):
     par = re.search(r"[A-Z]{3}[/][A-Z]{3}", text)
     par = par.group().replace("/", "")
     time_frame = re.search(r"[0-9]+[A-Z]{3}", text)
@@ -118,5 +119,5 @@ def get_sinais_gold(text:str):
     dict_info["Action"] = action
     dict_info["Origem"] = "Sinais Gold ao Vivo"
     dict_info["Status"] = 1
-    save_signal(mycolecao, dict_info)
+    save_sinal(conn, dict_info)
 
