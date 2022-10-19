@@ -25,10 +25,10 @@ def get_breno_trader(text: str):
     colecao = connect()  # abre a conexão e cria a coleção
     dict_info["Horario"] = datetime.now().strftime("%d/%m/%y") + f" {hora}"
     dict_info["Moeda"] = par
-    dict_info["Time_Frame"] = timeframe
+    dict_info["Time_Frame"] = int(timeframe)
     dict_info["Action"] = action
     dict_info["Origem"] = "Breno Trader"
-    dict_info["Status"] = "Open"
+    dict_info["Status"] = 1
     save_signal(mycolecao, dict_info)
 
 
@@ -50,10 +50,10 @@ def get_tigre_sinais(text: str):
 
             dict_info["Horario"] = datetime.now().strftime("%d/%m/%y") + f" {horario}"
             dict_info["Moeda"] = par
-            dict_info["Time_Frame"] = time_frame
+            dict_info["Time_Frame"] = int(time_frame)
             dict_info["Action"] = action
             dict_info["Origem"] = "Tigre dos Sinais"
-            dict_info["Status"] = "Open"
+            dict_info["Status"] = 1
             d = dict(dict_info)
             list_dados.append(d)
         mycolecao.insert_many(list_dados)
@@ -68,10 +68,10 @@ def get_padrão_avulso(text: str):
     if len(dados) >= 4:
         dict_info["Horario"] = datetime.now().strftime("%d/%m/%y") + f" {dados[2]}"
         dict_info["Moeda"] = dados[1]
-        dict_info["Time_Frame"] = dados[0].replace("M","")
+        dict_info["Time_Frame"] = int(dados[0].replace("M",""))
         dict_info["Action"] = dados[3]
         dict_info["Origem"] = "Sinal Avulso"
-        dict_info["Status"] = "Open"
+        dict_info["Status"] = 1
         colecao = connect() #abre a conexão e cria a coleção
         save_signal(mycolecao, dict_info)
 
@@ -93,10 +93,10 @@ def get_extensao_vip(text:str):
     dict_info = {}
     dict_info["Horario"] = datetime.now().strftime("%d/%m/%y") + f" {horario}"
     dict_info["Moeda"] = par
-    dict_info["Time_Frame"] = time_frame.replace("M","")
+    dict_info["Time_Frame"] = int(time_frame.replace("M",""))
     dict_info["Action"] = action
     dict_info["Origem"] = "Extensão Vip"
-    dict_info["Status"] = "Open"
+    dict_info["Status"] = 1
     colecao = connect()  # abre a conexão e cria a coleção
     save_signal(mycolecao, dict_info)
 
@@ -114,9 +114,9 @@ def get_sinais_gold(text:str):
     dict_info = {}
     dict_info["Horario"] = datetime.now().strftime("%d/%m/%y") + f" {horario}"
     dict_info["Moeda"] = par
-    dict_info["Time_Frame"] = time_frame
+    dict_info["Time_Frame"] = int(time_frame)
     dict_info["Action"] = action
     dict_info["Origem"] = "Sinais Gold ao Vivo"
-    dict_info["Status"] = "Open"
+    dict_info["Status"] = 1
     save_signal(mycolecao, dict_info)
 
