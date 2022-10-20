@@ -136,3 +136,4 @@ def get_rick_trader(text: str):
     dict_info["Origem"] = "Rick Trader"
     dict_info["Status"] = 1
     save_sinal(conn, dict_info)
+
