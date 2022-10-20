@@ -1,27 +1,15 @@
-from pymongo import MongoClient, collection
-from login import get_login
 from datetime import datetime
+from connect import get_connection, get_sinais, get_login, atualiza_sinal
 from iqoptionapi.stable_api import IQ_Option
 from threading import Thread
 import time
 
 
-try:
-    dadosLogin = get_login()
-    url = dadosLogin[2]
-    API = IQ_Option(dadosLogin[0], dadosLogin[1])
-    API.connect()
-except ConnectionError:
-    print("Erro ao logar...")
+conn = get_connection()
+login = get_login(conn)
 
-
-def connect(url=url, db_name="IQOption", collection_name="OB"):
-    myclient = MongoClient(url)
-    mydb = myclient[db_name]
-    mycollection = mydb[collection_name]
-    return mycollection
-
-
+API = IQ_Option(login[1], login[2])
+API.connect()
 # def save_all(collection_name: collection, lista_sinais):
 #     collection_name.insert_many(lista_sinais)
 #
@@ -64,10 +52,10 @@ def busca_pares_abertos():
     return ativo_aberto
 
 
-def abre_ordem_digital(active, amount, action, duration, collection, id_registro):
+def abre_ordem_digital(active, amount, action, duration, id_registro):
     try:
         status, order_id = API.buy_digital_spot_v2(active, amount, action, duration)  # abre uma ordem!
-        atualiza_status(collection, id_registro)
+        atualiza_sinal(conn, id_registro)
     except KeyError:
         print("Par Inválido...")
 
@@ -144,15 +132,13 @@ def executa_ordens():
         temp = datetime.now()
         if temp.minute % 5 == 0:
             lista_threads_operacoes = []
-            collect = connect()
-            dicio = dict({"Status": "Open"})
-            sinais = get_signals(collect, dicio)
+            sinais = get_sinais(conn)
             for sinal in sinais:
-                data = datetime.strptime(sinal['Horario'], '%d/%m/%y %H:%M') #verifica o horario da entrada
+                data = datetime.strptime(sinal[3], '%d/%m/%y %H:%M') #verifica o horario da entrada
                 if data.minute == temp.minute:
 
                     t = Thread(target=abre_ordem_digital,
-                               args=(sinal['Moeda'], 5, sinal['Action'], int(sinal['Time_Frame']), collect, sinal['_id']))
+                               args=(sinal[1], 5, sinal[2], sinal[4], sinal[0]))
                     lista_threads_operacoes.append(t)
                     t.start()
 

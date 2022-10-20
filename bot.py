@@ -1,18 +1,24 @@
 # -*- coding: utf-8 -*-
 import telebot
-from connect import get_connection, set_estado, get_estado
-
-from login import get_login
+from connect import get_connection, set_estado, get_estado, get_login, get_sinais
 from tools import executa_ordens
 from threading import Thread
 import json
-from catalogo import get_breno_trader, get_tigre_sinais, get_padrão_avulso, get_extensao_vip, get_sinais_gold
+from catalogo import get_breno_trader, get_tigre_sinais, get_padrão_avulso, get_extensao_vip, get_sinais_gold, \
+    get_rick_trader
 
-API_KEY = get_login()[3]
+conn = get_connection()
+API_KEY = get_login(conn)[3]
 bot = telebot.TeleBot(API_KEY)
 
 
 def liga_bot():
+    # conn = get_connection()
+    # print('Conexao: ', conn)
+    # estado = get_estado(conn)
+    # print('Estado: ', estado)
+    # set_estado(conn, 1)
+
     @bot.message_handler(commands=['executa_ordens'])
     def lista_operacoes(message):
         executa_ordens()
@@ -22,7 +28,6 @@ def liga_bot():
     def parar_bot(message):
         bot.send_message(message.chat.id, text="Parando Bot...")
         try:
-            conn = get_connection()
             set_estado(conn, 0)
             bot.stop_bot()
         except:
@@ -34,20 +39,18 @@ def liga_bot():
 
     @bot.message_handler(commands=['mostra_entradas'])
     def mostra_entradas(message):
-        conn = connect()
-        dic = dict({"Status": "Open"})
-        entradas = get_signals(conn, dic)
 
-        if entradas != None:
+        entradas = get_sinais(conn)
 
+        if entradas is not None:
             for entrada in entradas:
                 texto = f'''========================
-Horário: {entrada['Horario']}
-Par: {entrada['Moeda']}
-Time Frame: {entrada['Time_Frame']}
-Tipo: {entrada['Action']}
-Sala de Origem: {entrada['Origem']}
-Status: {entrada['Status']}
+Horário: {entrada[3]}
+Par: {entrada[1]}
+Time Frame: {entrada[4]}
+Tipo: {entrada[2]}
+Sala de Origem: {entrada[5]}
+Status: {entrada[6]}
 ========================
         '''
                 bot.send_message(message.chat.id, text=texto)
@@ -71,7 +74,7 @@ Status: {entrada['Status']}
         bot.send_message(message.chat.id, text=texto)
 
     # =============== python verifica o menu por último =========
-    def disponibiliza_menu(messge):
+    def disponibiliza_menu(message):
         return True
 
     @bot.message_handler(func=disponibiliza_menu)
@@ -80,12 +83,15 @@ Status: {entrada['Status']}
 
             mensagem = json.dumps(message.json)  # convert em string json
             dict_text = json.loads(mensagem)  # convert em dict
+            print(message.json)
 
             if "forward_from" in dict_text:
 
                 if dict_text['forward_from']['id'] == 1180878831:
                     get_breno_trader(dict_text['text'])
 
+                if dict_text['forward_from']['id'] == 1660604371:
+                    get_rick_trader(dict_text['text'])
 
             elif "forward_from_chat" in dict_text:
 
@@ -113,11 +119,10 @@ Status: {entrada['Status']}
             print("Erro de atributo...")
 
     try:
-        conn = get_connection()
-        estado_bot = get_estado(conn)
-        if estado_bot == 0:
-            set_estado(conn, 1)
-            bot.infinity_polling()  # inicia o bot
+        # estado_bot = get_estado(conn)
+        # if estado_bot == 0:
+        #     set_estado(conn, 1)
+        bot.infinity_polling()  # inicia o bot
     except TimeoutError:
         print("Erro ao se conectar com o SianisIQBot")
 
