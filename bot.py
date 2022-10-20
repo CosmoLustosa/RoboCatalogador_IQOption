@@ -4,7 +4,7 @@ from connect import get_connection, set_estado, get_estado, get_login, get_sinai
 from tools import executa_ordens
 import json
 from catalogo import get_breno_trader, get_tigre_sinais, get_padrão_avulso, get_extensao_vip, get_sinais_gold, \
-    get_rick_trader
+    get_rick_trader, get_eldorado_sinais
 
 conn = get_connection()
 API_KEY = get_login(conn)[3]
@@ -12,16 +12,13 @@ bot = telebot.TeleBot(API_KEY)
 
 
 def liga_bot():
-    # conn = get_connection()
-    # print('Conexao: ', conn)
-    # estado = get_estado(conn)
-    # print('Estado: ', estado)
-    # set_estado(conn, 1)
+
 
     @bot.message_handler(commands=['executa_ordens'])
-    def lista_operacoes(message):
-        executa_ordens()
+    def exec_ordens(message):
         bot.send_message(message.chat.id, text="Iniciando as operações...")
+        executa_ordens()
+
 
     @bot.message_handler(commands=['para_bot'])
     def parar_bot(message):
@@ -64,11 +61,9 @@ Status: {entrada[6]}
             Escolha uma das opções abaixo para continuar:
             /menu - exibe o menu
             /executa_ordens - lista as operações abertas
-            /consulta_proxima_operacao - mostra a próxima operação a ser aberta
             /mostra_padrao - mostra o padrao das mensagens de entrada
             /mostra_entradas - mostra entradas que serão efetuadas
             /para_bot - para o robo
-
         """
         bot.send_message(message.chat.id, text=texto)
 
@@ -82,7 +77,7 @@ Status: {entrada[6]}
 
             mensagem = json.dumps(message.json)  # convert em string json
             dict_text = json.loads(mensagem)  # convert em dict
-            print(message.json)
+
 
             if "forward_from" in dict_text:
 
@@ -91,6 +86,10 @@ Status: {entrada[6]}
 
                 if dict_text['forward_from']['id'] == 1660604371:
                     get_rick_trader(dict_text['text'])
+
+                if dict_text['forward_from']['id'] == 5369845111:
+                    get_eldorado_sinais(dict_text['text'])
+
 
             elif "forward_from_chat" in dict_text:
 

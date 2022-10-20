@@ -141,17 +141,17 @@ def get_rick_trader(text: str):
 def get_eldorado_sinais(text: str):
     horario = re.search(r'[0-9]{2}:[0-9]{2}', text)
     horario = horario.group()
-    # print(horario)
-
     par = re.search(r': [A-Z]{6}', text)
     par = par.group().strip().replace(': ', '')
-    # print(par)
-
     time_frame = re.search(r'[M]{1}[0-9]+', text)
     time_frame = time_frame.group().replace('M', '')
-    time_frame = int(time_frame)
-    print(time_frame)
-
+    time_frame = time_frame
     action = "PUT" if re.search(r'PUT', text) else "CALL"
-    # action = action.group()
-    # print(action)
+    dict_info = {}
+    dict_info["Horario"] = datetime.now().strftime("%d/%m/%y") + f" {horario}"
+    dict_info["Moeda"] = par
+    dict_info["Time_Frame"] = int(time_frame)
+    dict_info["Action"] = action
+    dict_info["Origem"] = "El Dorado Sinais"
+    dict_info["Status"] = 1
+    save_sinal(conn, dict_info)
