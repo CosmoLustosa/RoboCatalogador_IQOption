@@ -4,9 +4,9 @@ from flask import Flask
 from flask_restful import Resource, Api
 from threading import Thread
 
-
 app = Flask(__name__)
 api = Api(app)
+
 
 # class Bot(Resource):
 #     def get(self):
@@ -31,27 +31,25 @@ api = Api(app)
 # api.add_resource(Ordem, '/ordens')
 
 
-
-
 @app.route('/bot')
 def ligaBot():
     conn = get_connection()
-    print('Conexao: ', conn)
     estado = get_estado(conn)
-    print('Estado: ', estado)
-
 
     if int(estado) == 0:
+
         t = Thread(target=liga_bot)
         t.start()
         set_estado(conn, 1)
 
+        # liga_bot()
+
         return 'Ligando Bot'
     else:
         return 'O Bot já está ligado...'
+
+
 #
-
-
 
 
 # @app.route('/executa_ordens')
@@ -66,11 +64,5 @@ def ligaBot():
 #     return 'Index'
 
 
-
-
-
-
-
 if __name__ == '__main__':
     app.run(debug=True)
-
