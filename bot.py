@@ -2,7 +2,6 @@
 import telebot
 from connect import get_connection, set_estado, get_estado, get_login, get_sinais
 from tools import executa_ordens
-from threading import Thread
 import json
 from catalogo import get_breno_trader, get_tigre_sinais, get_padrão_avulso, get_extensao_vip, get_sinais_gold, \
     get_rick_trader
@@ -119,9 +118,6 @@ Status: {entrada[6]}
             print("Erro de atributo...")
 
     try:
-        # estado_bot = get_estado(conn)
-        # if estado_bot == 0:
-        #     set_estado(conn, 1)
         bot.infinity_polling()  # inicia o bot
     except TimeoutError:
         print("Erro ao se conectar com o SianisIQBot")

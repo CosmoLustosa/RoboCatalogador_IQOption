@@ -137,3 +137,21 @@ def get_rick_trader(text: str):
     dict_info["Status"] = 1
     save_sinal(conn, dict_info)
 
+
+def get_eldorado_sinais(text: str):
+    horario = re.search(r'[0-9]{2}:[0-9]{2}', text)
+    horario = horario.group()
+    # print(horario)
+
+    par = re.search(r': [A-Z]{6}', text)
+    par = par.group().strip().replace(': ', '')
+    # print(par)
+
+    time_frame = re.search(r'[M]{1}[0-9]+', text)
+    time_frame = time_frame.group().replace('M', '')
+    time_frame = int(time_frame)
+    print(time_frame)
+
+    action = "PUT" if re.search(r'PUT', text) else "CALL"
+    # action = action.group()
+    # print(action)

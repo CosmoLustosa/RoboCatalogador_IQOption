@@ -4,6 +4,8 @@ from flask import Flask
 from flask_restful import Resource, Api
 from threading import Thread
 
+
+conn = get_connection()
 app = Flask(__name__)
 api = Api(app)
 
@@ -33,7 +35,7 @@ api = Api(app)
 
 @app.route('/bot')
 def ligaBot():
-    conn = get_connection()
+
     estado = get_estado(conn)
 
     if int(estado) == 0:
@@ -49,13 +51,12 @@ def ligaBot():
         return 'O Bot já está ligado...'
 
 
-#
-
-
-# @app.route('/executa_ordens')
-# def executa_ordem():
-#     executa_ordens()
-#     return None
+@app.route('/zera_status')
+def zera_status():
+    estado = get_estado(conn)
+    if estado == 1:
+        set_estado(conn, 0)
+    return 'Status zerado'
 #
 #
 #
