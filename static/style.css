@@ -1,0 +1,33 @@
+body{
+    font-family: 'Fredoka One', cursive;
+}
+
+button{
+    width: 100%;
+    height: 200px;
+    background-color: slateblue;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    border: 0px;
+    cursor: pointer;
+}
+
+button.ligar{
+    background-color: limegreen;
+    color: white;
+}
+
+div{
+    width: 40%;
+    display: inline-block;
+    padding: 5px;
+
+}
+div.bot{
+float: left;
+}
+
+div.status{
+    clear: left;
+}

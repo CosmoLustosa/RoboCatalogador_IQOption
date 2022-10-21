@@ -65,21 +65,3 @@ def atualiza_sinal(conn: sqlite3.Connection, rowid: int):
     except ConnectionError:
         print('Erro ao atualizar o sinal...')
 
-
-if __name__ == '__main__':
-
-    conn = get_connection()
-    sinais = get_sinais(conn)
-    estado = get_estado(conn)
-    print(estado)
-    print(sinais)
-#     # login = get_login(conn)[3]
-#     # print(login)
-#     # cursor = conn.cursor()
-#     # sinal = cursor.execute('SELECT rowid, * FROM sinais WHERE status = 1')
-#     # dado = sinal.fetchone()
-#     # print(dado)
-#     # print(get_sinais(conn))
-#     #
-#     # print('******** Atualizando sinal ********')
-#     # atualiza_sinal(conn, dado[0])

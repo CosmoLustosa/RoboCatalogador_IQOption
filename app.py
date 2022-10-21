@@ -1,36 +1,16 @@
 from bot import liga_bot
 from connect import get_connection, set_estado, get_estado
-from flask import Flask
-from flask_restful import Resource, Api
+from flask import Flask, render_template
 from threading import Thread
 
 
 conn = get_connection()
 app = Flask(__name__)
-api = Api(app)
 
+@app.route('/')
+def home():
+    return render_template('index.html')
 
-# class Bot(Resource):
-#     def get(self):
-#         conn = get_connection()
-#         print('Conexao: ', conn)
-#         estado = get_estado(conn)
-#         print('Estado: ', estado)
-#         if int(estado) == 0:
-#             set_estado(conn, 1)
-#             liga_bot()
-#             return json.loads({'Bot': 'Ligado'})
-#         else:
-#             return {'Status Bot': 'Bot já ligado'.encode('utf-8')}
-
-# class Ordem(Resource):
-#     def get(self):
-#         return executa_ordens()
-#
-#
-# # adiciona as rotas
-#
-# api.add_resource(Ordem, '/ordens')
 
 
 @app.route('/bot')
@@ -44,11 +24,9 @@ def ligaBot():
         t.start()
         set_estado(conn, 1)
 
-        # liga_bot()
-
-        return 'Ligando Bot'
+        return render_template('ligabot.html', msg='Ligando Bot')
     else:
-        return 'O Bot já está ligado...'
+        return render_template('ligabot.html', msg='O Bot já está ligado!')
 
 
 @app.route('/zera_status')
@@ -56,13 +34,7 @@ def zera_status():
     estado = get_estado(conn)
     if estado == 1:
         set_estado(conn, 0)
-    return 'Status zerado'
-#
-#
-#
-# @app.route('/')
-# def index():
-#     return 'Index'
+    return render_template('status.html')
 
 
 if __name__ == '__main__':

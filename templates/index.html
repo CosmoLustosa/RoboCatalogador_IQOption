@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+
+
+
+</head>
+<body>
+    <div class="bot">
+        <a href="{{url_for('ligaBot')}}">
+            <button class="ligar">LIGAR BOT</button>
+        </a>
+    </div>
+    <div class="status">
+        <a href="{{url_for('zera_status')}}">
+            <button>ZERAR STATUS</button>
+        </a>
+    </div>
+
+</body>
+</html>
