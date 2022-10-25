@@ -17,6 +17,7 @@ def get_estado(conn: sqlite3.Connection) -> int:
 
 def set_estado(conn: sqlite3.Connection, value: int):
     try:
+
         cursor = conn.cursor()
         estados = cursor.execute(f'UPDATE estados SET status = {value} WHERE id = 1')
         conn.commit()

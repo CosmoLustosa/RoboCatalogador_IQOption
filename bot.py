@@ -122,5 +122,3 @@ Status: {entrada[6]}
         print("Erro ao se conectar com o SianisIQBot")
 
 
-if __name__ == '__main__':
-    liga_bot()

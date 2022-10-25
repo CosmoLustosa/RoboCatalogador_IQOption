@@ -13,6 +13,7 @@ button{
     cursor: pointer;
 }
 
+
 button.ligar{
     background-color: limegreen;
     color: white;
