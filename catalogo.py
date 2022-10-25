@@ -4,7 +4,7 @@ from datetime import datetime
 
 conn = get_connection()
 
-
+#
 # def get_bwinary_free(text: str):
 #     inputs = re.findall(r'[M][0-9]+ [A-Z]{6} [A-Z]+ [0-9]{2}[:][0-9]{2}', text)
 #     if len(inputs) > 0:
