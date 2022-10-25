@@ -61,7 +61,7 @@ def get_sinais(conn: sqlite3.Connection):
 def atualiza_sinal(conn: sqlite3.Connection, rowid: int):
     try:
         cursor = conn.cursor()
-        sinal = cursor.execute(f'UPDATE sinais SET status = 0 WHERE rowid = {rowid}')
+        cursor.execute(f'UPDATE sinais SET status = 0 WHERE rowid = {rowid}')
         conn.commit()
     except ConnectionError:
         print('Erro ao atualizar o sinal...')
