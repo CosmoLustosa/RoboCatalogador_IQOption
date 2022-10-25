@@ -3,7 +3,7 @@ import telebot
 from connect import get_connection, set_estado, get_estado, get_login, get_sinais
 from tools import executa_ordens
 import json
-from catalogo import get_breno_trader, get_tigre_sinais, get_padrão_avulso, get_extensao_vip, get_sinais_gold, \
+from catalogo import get_breno_trader, get_tigre_sinais, get_padrão_avulso, get_extensao_vip, get_sinais_gold,\
     get_rick_trader, get_eldorado_sinais
 
 conn = get_connection()
