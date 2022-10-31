@@ -36,3 +36,6 @@ def zera_status():
         set_estado(conn, 0)
     return render_template('status.html')
 
+
+if __name__ == '__main__':
+    app.run(debug=True)
