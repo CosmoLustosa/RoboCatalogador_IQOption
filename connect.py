@@ -51,12 +51,6 @@ def save_sinal(conn: mysql.connector.MySQLConnection, sinal: dict):
         print(e)
 
 
-# dict_dado = {'Moeda': 'GBPUSD', 'Action': 'PUT', 'Horario': '31/10/2022 13:15', 'Time_Frame': 5, 'Origem': 'ultimo lancamento',
-#              'Status': 1}
-# save_sinal(db, dict_dado)
-# print('Salvou os dados')
-
-
 def get_sinais(conn: mysql.connector.MySQLConnection):
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM sinais WHERE status = 1')
@@ -70,5 +64,3 @@ def atualiza_sinal(conn: mysql.connector.MySQLConnection, id: int):
         conn.commit()
     except ConnectionError:
         print('Erro ao atualizar o sinal...')
-
-
