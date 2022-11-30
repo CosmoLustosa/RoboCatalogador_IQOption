@@ -81,6 +81,7 @@ def send_welcome(message):
 
         mensagem = json.dumps(message.json)  # convert em string json
         dict_text = json.loads(mensagem)  # convert em dict
+        print(message)
 
         if "forward_from" in dict_text:
 

@@ -151,3 +151,15 @@ def get_eldorado_sinais(text: str):
     dict_info["Origem"] = "El Dorado Sinais"
     dict_info["Status"] = 1
     save_sinal(conn, dict_info)
+
+
+dict_info = {}
+# colecao = connect()  # abre a conexão e cria a coleção
+dict_info["Horario"] = datetime.now().strftime("%d/%m/%y") + f" {13:50}"
+dict_info["Moeda"] = "EURUSD"
+dict_info["Time_Frame"] = 5
+dict_info["Action"] = "PUT"
+dict_info["Origem"] = "Breno Trader"
+dict_info["Status"] = 1
+
+save_sinal(conn, dict_info)
