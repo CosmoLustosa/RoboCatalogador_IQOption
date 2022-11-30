@@ -73,7 +73,7 @@ def get_padrão_avulso(text: str):
         dict_info["Origem"] = "Sinal Avulso"
         dict_info["Status"] = 1
         # colecao = connect() #abre a conexão e cria a coleção
-        # save_signal(mycolecao, dict_info)
+        save_sinal(conn, dict_info)
 
 
 # pronto
