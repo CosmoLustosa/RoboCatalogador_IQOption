@@ -54,9 +54,6 @@ def get_tigre_sinais(text: str):
             dict_info["Origem"] = "Tigre dos Sinais"
             dict_info["Status"] = 1
             save_sinal(conn, dict_info)
-        #     d = dict(dict_info)
-        #     list_dados.append(d)
-        # mycolecao.insert_many(list_dados)
 
 
 # pronto
@@ -76,7 +73,6 @@ def get_padrão_avulso(text: str):
         save_sinal(conn, dict_info)
 
 
-# pronto
 def get_extensao_vip(text: str):
     par = re.search(r"[A-Z]{6}", text)
     par = par.group()
