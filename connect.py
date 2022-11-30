@@ -65,6 +65,3 @@ def atualiza_sinal(conn: sqlite3.Connection, id: int):
         conn.commit()
     except ConnectionError:
         print('Erro ao atualizar o sinal...')
-
-
-# print(get_sinais(db))
