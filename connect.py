@@ -67,4 +67,4 @@ def atualiza_sinal(conn: sqlite3.Connection, id: int):
         print('Erro ao atualizar o sinal...')
 
 
-print(get_sinais(db))
+# print(get_sinais(db))
